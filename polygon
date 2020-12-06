@@ -1,5 +1,3 @@
-#include stdio.h
-#include conio.h
 #define MIN(x,y) (x < y ? x : y) 
 #define MAX(x,y) (x > y ? x : y) 
 #define INSIDE 0 
@@ -8,7 +6,12 @@
 public class polygon
 {
 
-  public static int main(int n, Point *s, Point p)
+  typedef struct 
+  {
+    double x,y;
+  } Point;
+  
+  public static int main(int n, Point s[], Point p)
   {
     int c=0;
     double intersection;
