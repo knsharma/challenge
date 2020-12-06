@@ -1,0 +1,37 @@
+#include stdio.h
+#include conio.h
+#define MIN(x,y) (x < y ? x : y) 
+#define MAX(x,y) (x > y ? x : y) 
+#define INSIDE 0 
+#define OUTSIDE 1
+
+public class polygon
+{
+
+  public static int main(int n, Point *s, Point p)
+  {
+    int c=0;
+    double intersection;
+    Point p1; p2;
+    
+    p1=p[0];
+    for(int i=1; i<=n; i++)
+    {
+      p2=p[i%n];
+      if (p.y > MIN(p1.y,p2.y)) {
+      if (p.y <= MAX(p1.y,p2.y)) {
+        if (p.x <= MAX(p1.x,p2.x)) {
+          if (p1.y != p2.y) {
+            xinters = (p.y-p1.y)*(p2.x-p1.x)/(p2.y-p1.y)+p1.x;
+            if (p1.x == p2.x || p.x <= intersection)
+            c++;
+          }
+        }
+      }
+    }
+    p1 = p2;
+   }
+   
+   if(c%2==0) return(OUTSIDE);
+   else       return(INSIDE);
+  }
