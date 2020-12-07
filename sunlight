@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <conio.h>
+#include <iostream>
+#define MIN(x,y) (x < y ? x : y) 
+#define MAX(x,y) (x > y ? x : y) 
+
+public class sunlight
+{
+
+  typedef struct 
+  {
+    double x,y;
+  } Point;
+  
+  // Point p is for the sun
+  // Point s[4] are for the coordinates of the building
+  
+  public static void main()
+  {
+    int n;
+    Point s[];
+    Point p;
+    
+    cout << "Enter the no. of building: ";
+    cin  >> n;
+    
+    for(int i=0; i<n; i++)
+    {
+      int l=i+1;
+      cout << "Enter the 4 co-ordinates of building " << l;
+      
+      int j=i+4;
+      for(int k=i; k<j; k++)
+      {
+        cin >> s[k];
+      }
+    }
+  
+  }  
+}
