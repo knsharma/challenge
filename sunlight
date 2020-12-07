@@ -2,101 +2,84 @@
 #include <conio.h>
 #include <iostream>
 
-public class sunlight
+class sunlight
 {
-
-  typedef struct 
-  {
-    double x,y;
-  } Point;
-  
-      
-  public static void main()
-  {
-    int n;
-    Point s[];  // Point s[] are for the coordinates of the building
-    Point p;    // Point p is for the sun
-    
-    cout << "Enter the no. of building: ";
-    cin  >> n;
-    
-    for(int i=0; i<n; i++)
+    typedef struct
     {
-      int l=i+1;
-      cout << "Enter the 4 co-ordinates of building " << l;
-      
-      int j=i+4;
-      for(int k=i; k<j; k++)
-      {
-        cin >> s[k];
-      }
-    }
+        double x,y;
+        
+    } Point;
     
-    cout << "Enter the co-ordinates of the sun: ";
-    cin  >> p;
-    
-    
-    //sort the coordinates entered in ascending x-axis values to know which building comes first
-    
-    for ( int a=(n-1); a>=0; a--)
+    void main(int n, Point *s, Point p)
     {
-      Point c; //control variable for swapping
-      for( int b=0; b<=a; b++)
-      {
-        if(s.x[b]>s.x[a])
+        Point p1, p2, p3;
+        //sort the coordinates entered in ascending x-axis values to know which building comes first
+        for ( int a=(n-1); a>=0; a--)
         {
-          c=s[b];
-          s[b]=s[a];
-          s[a]=c;
+            for( int b=0; b<=a; b++)
+            {
+                p1=s[b];
+                p2=s[a];
+                
+                if(p1.x>p2.x)
+                {
+                    p3=p1;
+                    p1=p2;
+                    p2=p3;
+                    
+                }
+                
+                if(p1.x[b]==p2.x[a])
+                {
+                    if(p1.y[b]>p2.y[a])
+                    {
+                        p3=p1;
+                        p1=p2;
+                        p2=p3;
+                        
+                    }
+                    
+                }
+                
+            }
+            
         }
-      
-        if(s.x[b]==s.x[a])
+        
+        double length=0;  //length of surface exposed to sun
+        double h=0; //h is the height of building exposed to sun
+        double w=0; //width of the building exposed to sun
+        
+        h=h+(s.y[1]-s.y[0]);
+        w=w+(s.x[3]-s.x[1]);
+        
+        Point idc; //point of incidence of sunray
+        
+        for(int d=3; d<n; d=d+2)
         {
-          if(s.y[b]>s.y[a])
-          {
-            c=s[b];
-            s[b]=s[a];
-            s[a]=c;
-          }
+            m=((s.y[d]-p.y)/(s.x[d]-p.x));
+            c=((m*(-(s.x[d])))+s.y[d]);
+            
+            idc.y=((m*s.x[(d+4)])+c);
+            if((d+4)<=n)
+            {
+                if(idc.y<=s.y[(d+5)])
+                {
+                    idc.x=s.x[(d+4)];
+                    h=h+(s.y[(d+5)]-idc.y);
+                    w=w+(s.x[(d+7)]-idc.x);
+                    
+                }
+                else
+                continue;
+                
+            }
+            else
+            continue;
+            
         }
-      }
+        
+        length=h+w;
+        printf("Surface exposure: %lf", length);
+        
     }
     
-    double length=0;  //length of surface exposed to sun
-    double h=0; //h is the height of building exposed to sun
-    double w=0; //width of the building exposed to sun
-    
-    h=h+(s.y[1]-s.y[0]);
-    w=w+(s.x[3]-s.x[1]);
-    
-    Point idc; //point of incidence of sunray
-    for(int d=3; d<n; d=d+2)
-    {
-      m=((s.y[d]-p.y)/(s.x[d]-p.x));
-      c=((m*(-(s.x[d])))+s.y[d]);
-      
-      
-      idc.y=((m*s.x[(d+4)])+c);
-      
-      if((d+4)<=n)
-      {
-        if(idc.y<=s.y[(d+5)])
-        {
-          idc.x=s.x[(d+4)];
-          h=h+(s.y[(d+5)]-idc.y);
-          w=w+(s.x[(d+7)]-idc.x);
-        } 
-        else
-        continue;
-      }
-      else
-        continue;
-    }
-    
-    length=h+w;
-    
-    cout << "Surface exposure: " << length;
-    
-  
-  }
-}
