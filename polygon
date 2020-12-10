@@ -3,26 +3,58 @@
 #include <iostream>
 #define MIN(x,y) (x < y ? x : y) 
 #define MAX(x,y) (x > y ? x : y) 
-#define INSIDE 0 
-#define OUTSIDE 1
 
-class polygoncheck
-{
-    typedef struct
+typedef struct
     {
         double x,y;
         
     } Point;
     
-    void main(int n, Point *s, Point p)
+int main()
     {
+        int n;
+        Point p;
+        
+        std::cout << "Enter n sides: " << std::endl;
+        std::cin >> n;
+        
+        
+        
+        double X[n];
+        double Y[n];
+        
+        std::cout << "Enter the coordinates of each point, first X then Y respectively." << std::endl;
+        
+        for(int a=0; a<n; a++)
+        {
+            std::cout << "Enter X coordinate: " << std::endl;
+            std::cin >> X[a];
+            
+            std::cout << "Enter Y coordinate: " << std::endl;
+            std::cin >> Y[a];
+            
+        }
+        
+        std::cout << "Enter the coordinates of each point, first X then Y respectively." << std::endl;
+        std::cout << "Enter X coordinate: " << std::endl;
+        double XP;
+        std::cin >> XP;
+        p.x=XP;
+        std::cout << "Enter Y coordinate: " << std::endl;
+        double YP;
+        std::cin >> YP;
+        p.y=YP;
+        
         int c=0;
         double inters;
         Point p1, p2;
         p1=p;
+        
         for(int i=1; i<=n; i++)
         {
-            p2=s[i%n];
+            p2.x=X[i%n];
+            p2.y=Y[i%n];
+            
             if (p.y > MIN(p1.y,p2.y))
             {
                 if (p.y <= MAX(p1.y,p2.y))
@@ -42,25 +74,25 @@ class polygoncheck
                 }
                 
             }
+            p1 = p2;
             
         }
-        p1 = p2;
+        
         if(c==0)
         {
-            std::cout << "OUTSIDE" << std::endl;
+            std::cout << "INSIDE" << std::endl;
+            return 0;
             
         }
         else if(c%2==0)
         {
-            std::cout << "OUTSIDE" << std::endl;
-            
+            std::cout << "INSIDE" << std::endl;
+            return 0;
         }
         else
         {
-            std::cout << "INSIDE" << std::endl;
-            
+            std::cout << "OUTSIDE" << std::endl;
+            return 0;
         }
         
     }
-    
-};
