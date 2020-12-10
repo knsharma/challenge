@@ -2,26 +2,72 @@
 #include <conio.h>
 #include <iostream>
 
-class sunlight
+typedef struct
 {
-    typedef struct
-    {
-        double x,y;
-        
-    } Point;
+    double x,y;
     
-    void main(int n, Point *s, Point p)
+} Point;
+
+main()
+{
+    int n;
+    Point p;
+    
+    std::cout << "Enter n buildings: " << std::endl;
+    std::cin >> n;
+    
+    double X[(4*n)];
+    double Y[(4*n)];
+    
+    for(int b=0; b<n; b++)
     {
-        Point p1, p2, p3;
-        //sort the coordinates entered in ascending x-axis values to know which building comes first
-        for ( int a=(n-1); a>=0; a--)
+        std::cout << "Enter the coordinates of building" << b << std::endl;
+        std::cout << "Enter the coordinates of each point, first X then Y respectively." << std::endl;
+        for(int a=0; a<4; a++)
         {
-            for( int b=0; b<=a; b++)
+            std::cout << "Enter X coordinate: " << std::endl;
+            std::cin >> X[a];
+            
+            std::cout << "Enter Y coordinate: " << std::endl;
+            std::cin >> Y[a];
+            
+        }
+        
+    }
+    
+    std::cout << "Enter the coordinates of the source of light" << std::endl;
+    std::cout << "Enter the coordinates, first X then Y respectively." << std::endl;
+    std::cout << "Enter X coordinate: " << std::endl;
+    double XP;
+    std::cin >> XP;
+    p.x=XP;
+    std::cout << "Enter Y coordinate: " << std::endl;
+    double YP;
+    std::cin >> YP;
+    p.y=YP;
+    
+    Point p1, p2, p3, p4;
+    //sort the coordinates entered in ascending x-axis values to know which building comes first
+    for ( int a=(n-1); a>=0; a--)
+    {
+        for( int b=0; b<=a; b++)
+        {
+            p1.x=X[b];
+            p1.y=Y[b];
+            p2.x=X[a];
+            p2.y=Y[a];
+            
+            if(p1.x>p2.x)
             {
-                p1=s[b];
-                p2=s[a];
+                p3=p1;
+                p1=p2;
+                p2=p3;
                 
-                if(p1.x>p2.x)
+            }
+            
+            if(p1.x==p2.x)
+            {
+                if(p1.y>p2.y)
                 {
                     p3=p1;
                     p1=p2;
@@ -29,57 +75,67 @@ class sunlight
                     
                 }
                 
-                if(p1.x[b]==p2.x[a])
-                {
-                    if(p1.y[b]>p2.y[a])
-                    {
-                        p3=p1;
-                        p1=p2;
-                        p2=p3;
-                        
-                    }
-                    
-                }
-                
             }
             
         }
         
-        double length=0;  //length of surface exposed to sun
-        double h=0; //h is the height of building exposed to sun
-        double w=0; //width of the building exposed to sun
+    }
+    
+    double length=0;  //length of surface exposed to sun
+    double h=0; //h is the height of building exposed to sun
+    double w=0; //width of the building exposed to sun
+    
+    p1.x=X[0];
+    p1.y=Y[0];
+    p2.x=X[1];
+    p2.y=Y[1];
+    p3.x=X[3];
+    p3.y=Y[3];
+    
+    h=h+(p2.y-p1.y);
+    w=w+(p3.x-p2.x);
+    double m;
+    double c;
+    
+    Point idc; //point of incidence of sunray
+    
+    for(int d=3; d<n; d=d+2)
+    {
+        p1.x=X[d];
+        p1.y=Y[d];
         
-        h=h+(s.y[1]-s.y[0]);
-        w=w+(s.x[3]-s.x[1]);
+        p2.x=X[(d+1)];
+        p2.y=Y[(d+1)];
         
-        Point idc; //point of incidence of sunray
+        p3.x=X[(d+2)];
+        p3.y=Y[(d+2)];
         
-        for(int d=3; d<n; d=d+2)
+        p4.x=X[(d+3)];
+        p4.y=Y[(d+3)];
+        
+        m=((p1.y-p.y)/(p1.x-p.x));
+        c=((m*(-(p1.x)))+p1.y);
+        
+        idc.y=((m*(p2.x))+c);
+        if((d+1)<=n)
         {
-            m=((s.y[d]-p.y)/(s.x[d]-p.x));
-            c=((m*(-(s.x[d])))+s.y[d]);
-            
-            idc.y=((m*s.x[(d+4)])+c);
-            if((d+4)<=n)
+            if(idc.y<=p3.y)
             {
-                if(idc.y<=s.y[(d+5)])
-                {
-                    idc.x=s.x[(d+4)];
-                    h=h+(s.y[(d+5)]-idc.y);
-                    w=w+(s.x[(d+7)]-idc.x);
-                    
-                }
-                else
-                continue;
+                idc.x=p2.x;
+                h=h+(p3.y-idc.y);
+                w=w+(p4.x-idc.x);
                 
             }
             else
             continue;
             
         }
-        
-        length=h+w;
-        printf("Surface exposure: %lf", length);
+        else
+        continue;
         
     }
     
+    length=h+w;
+    printf("Surface exposure: %lf", length);
+    
+}
